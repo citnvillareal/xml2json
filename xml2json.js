@@ -1,3 +1,22 @@
+/*!
+ * xml2json library
+ * Original author: Neil K. Villareal
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Neil K. Villareal
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software 
+ * is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in 
+ * all copies or substantial portions of the Software.
+ */
+
 var xml2json = (function(window, document, undefined){
 
 	var options = {
@@ -130,12 +149,12 @@ var xml2json = (function(window, document, undefined){
 				endedTag = unendedTags.pop();
 				var unendedTag = unendedTags.pop();
 
-				if(typeof unendedTag != 'undefined') {
+				if(typeof unendedTag != undefined) {
 					if(unendedTag['value'] == "") {
 						unendedTag['value'] = {};
 					}
 
-					if(typeof unendedTag['value'][endedTag['key']] != 'undefined') {
+					if(typeof unendedTag['value'][endedTag['key']] != undefined) {
 
 						if(Array.isArray(unendedTag['value'][endedTag['key']])) {
 							unendedTag['value'][endedTag['key']].push(endedTag['value']);
@@ -165,7 +184,7 @@ var xml2json = (function(window, document, undefined){
 
 		if(this.options.xml == false) return false;
 
-		if(typeof obj == 'undefined') obj = this.toJSON();
+		if(typeof obj == undefined) obj = this.toJSON();
 
 		if(obj.hasOwnProperty(key)) {
 			result.push(obj[key]);
