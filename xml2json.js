@@ -205,8 +205,19 @@ var xml2json = (function(window, document, undefined){
 
 		return result;
 	};
+	
+	Plugin.prototype.makeArray = function(obj) {
+		var temp = [];
+		
+		if(Array.isArray(obj)) return obj;
+		
+		temp.push(obj);
+		
+		return temp;
+	};
 
 	return Plugin;
 
 })(window, document, 'undefined');
 
+if(typeof define == 'function' && typeof require == 'function') define([], function(){return xml2json;});
