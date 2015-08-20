@@ -89,7 +89,7 @@ var xml2json = (function(window, document, undefined){
 				obj["value"] = {};
 				for(var i = 1; i < tempArr.length; i++) {
 					var keyValue = tempArr[i].split("=");
-					obj["value"][keyValue[0]] = keyValue[1].replace(/(^")|("$)/g,"");
+					obj["value"]["@"+keyValue[0]] = keyValue[1].replace(/(^")|("$)/g,"");
 				}
 			} else {
 				obj["value"] = "";
@@ -190,6 +190,10 @@ var xml2json = (function(window, document, undefined){
 			result.push(obj[key]);
 		}
 
+		if(obj.hasOwnProperty("@"+key)) {
+			result.push(obj["@"+key]);
+		}
+
 		for(var k in obj) {
 			if(typeof obj[k] == 'object') {
 				var tempObj = this.get(key, obj[k]);
@@ -205,3 +209,4 @@ var xml2json = (function(window, document, undefined){
 	return Plugin;
 
 })(window, document, 'undefined');
+
