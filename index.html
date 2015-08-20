@@ -7,38 +7,38 @@
 	<script type="text/javascript">
 
 		var xmlString = '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
-				    <soap:Body>\
-				        <ns2:getWatchListDetailsResponse xmlns:ns2="http://service.ivlm.accenture.com/">\
-				            <getWatchListDetailsMsg>\
-				                <code>0</code>\
-				                <message>Success.</message>\
-				                <individualWatchlistDetails watchListId="5912">\
-				                    <title>Programmer</title>\
-				                    <profileRefNumber>V000000444</profileRefNumber>\
-				                    <employer>Arcelor Mittal</employer>\
-				                    <startDate>Immediately</startDate>\
-				                    <jobLocation>Indianapolis,United States</jobLocation>\
-				                    <vacancyStatus>Published</vacancyStatus>\
-				                    <addedTowatchlistDate>17.08.2015</addedTowatchlistDate>\
-				                    <companyId>52643</companyId>\
-				                    <vacancyId>444</vacancyId>\
-				                </individualWatchlistDetails>\
-				                <individualWatchlistDetails>\
-				                    <watchListId>5912</watchListId>\
-				                    <title>Programmer</title>\
-				                    <profileRefNumber>V000000444</profileRefNumber>\
-				                    <employer>Arcelor Mittal</employer>\
-				                    <startDate>Immediately</startDate>\
-				                    <jobLocation>Indianapolis,United States</jobLocation>\
-				                    <vacancyStatus>Published</vacancyStatus>\
-				                    <addedTowatchlistDate>17.08.2015</addedTowatchlistDate>\
-				                    <companyId>52643</companyId>\
-				                    <vacancyId>444</vacancyId>\
-				                </individualWatchlistDetails>\
-				            </getWatchListDetailsMsg>\
-				        </ns2:getWatchListDetailsResponse>\
-				    </soap:Body>\
-				</soap:Envelope>';
+						    <soap:Body>\
+						        <ns2:getWatchListDetailsResponse xmlns:ns2="http://test.com/">\
+						            <getWatchListDetailsMsg>\
+						                <code>0</code>\
+						                <message>Success.</message>\
+						                <individualWatchlistDetails watchListId="5912">\
+						                    <title>Programmer</title>\
+						                    <profileRefNumber>V000000444</profileRefNumber>\
+						                    <employer>Arcelor Mittal</employer>\
+						                    <startDate>Immediately</startDate>\
+						                    <jobLocation>Indianapolis,United States</jobLocation>\
+						                    <vacancyStatus>Published</vacancyStatus>\
+						                    <addedTowatchlistDate>17.08.2015</addedTowatchlistDate>\
+						                    <companyId>52643</companyId>\
+						                    <vacancyId>444</vacancyId>\
+						                </individualWatchlistDetails>\
+						                <individualWatchlistDetails>\
+						                    <watchListId>5912</watchListId>\
+						                    <title>Programmer</title>\
+						                    <profileRefNumber>V000000444</profileRefNumber>\
+						                    <employer>Arcelor Mittal</employer>\
+						                    <startDate>Immediately</startDate>\
+						                    <jobLocation>Indianapolis,United States</jobLocation>\
+						                    <vacancyStatus>Published</vacancyStatus>\
+						                    <addedTowatchlistDate>17.08.2015</addedTowatchlistDate>\
+						                    <companyId>52643</companyId>\
+						                    <vacancyId>444</vacancyId>\
+						                </individualWatchlistDetails>\
+						            </getWatchListDetailsMsg>\
+						        </ns2:getWatchListDetailsResponse>\
+						    </soap:Body>\
+						</soap:Envelope>';
 
 
 		var xmlParser = new xml2json({xml: xmlString});
