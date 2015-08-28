@@ -184,26 +184,30 @@ var xml2json = (function(window, document, undefined){
 
 		if(this.options.xml == false) return false;
 
-		if(typeof obj == undefined) obj = this.toJSON();
+		obj = obj || this.toJSON();
 
-		if(obj.hasOwnProperty(key)) {
-			result.push(obj[key]);
-		}
-
-		if(obj.hasOwnProperty("@"+key)) {
-			result.push(obj["@"+key]);
-		}
+		if(typeof obj != 'object') return false;
 
 		for(var k in obj) {
-			if(typeof obj[k] == 'object') {
-				var tempObj = this.get(key, obj[k]);
-				for(var i in tempObj) {
-					result.push(tempObj[i]);
+			if(k == key) {
+				result.push(obj[key]);
+			} else if(k == ("@"+key)) {
+				result.push(obj["@"+key]);
+			} else {
+				if(typeof obj[k] == 'object') {
+					var tempObj = this.get(key, obj[k]);
+					if(typeof tempObj == "string") {
+						result.push(tempObj);
+					} else {
+						for(var i in tempObj) {
+							result.push(tempObj[i]);
+						}
+					}
 				}
 			}
 		}
 
-		return result;
+		return result.length <= 1? (result[0] || false): result;
 	};
 	
 	Plugin.prototype.makeArray = function(obj) {
