@@ -42,6 +42,7 @@ var xml2json = (function(window, document, undefined){
 		var end = false;
 		var tag = "";
 		var content = "";
+
 		for(var i = 0; i < xmlStringLen; i++) {
 
 			if(xmlString[i] == "<") {
@@ -76,23 +77,27 @@ var xml2json = (function(window, document, undefined){
 	};
 
 	Plugin.prototype.generateObject = function(xmlString) {
-		var obj = {};
-		var pattern = /<[^\/]([^>]+)\/?>/g;
+		var obj = {},
+			pattern = /<[^\/]([^>]+)\/?>/g,
+			tempArr = [];
 
 		if(pattern.test(xmlString)) {
 			xmlString = xmlString.replace(/(^<)|(>$)/g, "");
-			var tempArr = xmlString.split(/\s/g);
+			tempArr = xmlString.split(/\s+/g);
 			
 			obj["key"] = tempArr[0];
-			if(tempArr.length > 1) {
+			obj["value"] = "";
 
+			if(tempArr.length > 1) {
 				obj["value"] = {};
 				for(var i = 1; i < tempArr.length; i++) {
 					var keyValue = tempArr[i].split("=");
-					obj["value"]["@"+keyValue[0]] = keyValue[1].replace(/(^")|("$)/g,"");
+					if(keyValue.length > 1) {
+						obj["value"]["@"+keyValue[0]] = keyValue[1].replace(/(^")|("$)/g,"");
+					} else {
+						obj["value"]["@"+keyValue[0]] = "";
+					}
 				}
-			} else {
-				obj["value"] = "";
 			}
 		} else {
 			return false;
@@ -102,6 +107,7 @@ var xml2json = (function(window, document, undefined){
 	};
 
 	Plugin.prototype.convertTagsToObj = function(tags) {
+
 		for(var i in tags) {
 			var obj = this.generateObject(tags[i]);
 			if(obj) {
@@ -113,50 +119,52 @@ var xml2json = (function(window, document, undefined){
 	};
 
 	Plugin.prototype.toJSON = function(xmlString) {
+		
+		var tags = [],
+			unendedTags = [];
 
-		var xmlString = xmlString || this.options.xml,
-			tags = this.getAllTags(xmlString),
-			unendedTags = [],
-			endedTag,
-			json = {};
+		xmlString = "<xml2json>" + (xmlString || this.options.xml) + "</xml2json>";
 
-		tags = this.convertTagsToObj(tags);		
-
-
+		tags = this.convertTagsToObj(this.getAllTags(xmlString));
 
 		for(var i in tags) {
+
 			var tag = tags[i];
 
 			if(typeof tag == "object") {
-				
-				if(!(/\/$/g.test(tag['key']))) {
-					unendedTags.push(tag);
-				} else {
-					var unendedTag = unendedTags.pop();
-					unendedTag["value"][unendedTag["key"].replace(/\/$/g, "")] = tag["value"];
-					unendedTags.push(unendedTag);
-				}
 
-			} else if(typeof tag == "string" && !(/^<\/[^>]+>$/g.test(tag))) {
+				unendedTags.push(tag);
+
+			}
+
+			if(typeof tag == "string" && !(/^<\/[^>]+>$/g.test(tag))) {
+
 				var unendedTag = unendedTags.pop();
-				if(typeof unendedTag["value"] == 'object') {
-					unendedTag["value"]["value"] = tag;
-				} else {
-					unendedTag["value"] = tag;
-				}
+				unendedTag["value"] = tag;
 				unendedTags.push(unendedTag);
-			} else if(typeof tag == "string" && /^<\/[^>]+>$/g.test(tag)) {
-				endedTag = unendedTags.pop();
-				var unendedTag = unendedTags.pop();
 
-				if(typeof unendedTag != undefined) {
+			}
+
+			if(typeof tag == "string" && /^<\/[^>]+>$/g.test(tag)) {
+
+				do {
+
+					var endedTag = unendedTags.pop(),
+						unendedTag = unendedTags.pop(),
+						validateEndTag = endedTag['key'] == tag.replace(/^<\/|>$/g,'');
+
+					//console.log(endedTag['key'], "----->", tag, validateEndTag);
+					if(typeof unendedTag == undefined) {
+						return endedTag['value'];
+					}
+
 					if(unendedTag['value'] == "") {
 						unendedTag['value'] = {};
 					}
 
-					if(typeof unendedTag['value'][endedTag['key']] != undefined) {
+					if(typeof unendedTag['value'][endedTag['key']] != undefined && validateEndTag) {
 
-						if(Array.isArray(unendedTag['value'][endedTag['key']])) {
+						if(unendedTag['value'][endedTag['key']] instanceof Array) {
 							unendedTag['value'][endedTag['key']].push(endedTag['value']);
 						} else {
 							var temp = [];
@@ -170,13 +178,13 @@ var xml2json = (function(window, document, undefined){
 					}
 
 					unendedTags.push(unendedTag);
-				} else {
-					json[endedTag['key']] = endedTag['value'];
-				}
+
+				} while(!validateEndTag && typeof unendedTag != undefined);
+
 			}
 		}
 
-		return json;
+		return false;
 	};
 
 	Plugin.prototype.get = function(key, obj) {
