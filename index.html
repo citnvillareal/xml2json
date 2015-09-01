@@ -8,55 +8,14 @@
 	<script type="text/javascript" src="xml2json.js"></script>
 	<script type="text/javascript">
 
-		var xmlString = '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
-							<tests><test>hahaha</test><test>hahaha1</test></tests>\
-							<hahaha>\
-						 </soap:Envelope>\
-						 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">\
-						    <soap:Body>\
-						        <ns2:getWatchListDetailsResponse xmlns:ns2="http://test.com/">\
-						            <getWatchListDetailsMsg>\
-						                <code>0</code>\
-						                <message>Success.</message>\
-						                <individualWatchlistDetails watchListId="5912">\
-						                    <title>Programmer</title>\
-						                    <profileRefNumber>V000000444</profileRefNumber>\
-						                    <employer>Arcelor Mittal</employer>\
-						                    <startDate>Immediately</startDate>\
-						                    <jobLocation>Indianapolis,United States</jobLocation>\
-						                    <vacancyStatus>Published</vacancyStatus>\
-						                    <addedTowatchlistDate>17.08.2015</addedTowatchlistDate>\
-						                    <companyId>52643</companyId>\
-						                    <vacancyId>444</vacancyId>\
-						                </individualWatchlistDetails>\
-						                <individualWatchlistDetails>\
-						                    <watchListId>5912</watchListId>\
-						                    <title>Programmer</title>\
-						                    <profileRefNumber>V000000444</profileRefNumber>\
-						                    <employer>Arcelor Mittal</employer>\
-						                    <startDate>Immediately</startDate>\
-						                    <jobLocation>Indianapolis,United States</jobLocation>\
-						                    <vacancyStatus>Published</vacancyStatus>\
-						                    <addedTowatchlistDate>17.08.2015</addedTowatchlistDate>\
-						                    <companyId>52643</companyId>\
-						                    <vacancyId>444</vacancyId>\
-						                </individualWatchlistDetails>\
-						            </getWatchListDetailsMsg>\
-						            <individualWatchlistDetails>\
-						                    <watchListId>5912</watchListId>\
-						                    <title>Programmer</title>\
-						                    <profileRefNumber>V000000444</profileRefNumber>\
-						                    <employer>Arcelor Mittal</employer>\
-						                    <startDate>Immediately</startDate>\
-						                    <jobLocation>Indianapolis,United States</jobLocation>\
-						                    <vacancyStatus>Published</vacancyStatus>\
-						                    <addedTowatchlistDate>17.08.2015</addedTowatchlistDate>\
-						                    <companyId>52643</companyId>\
-						                    <vacancyId>444</vacancyId>\
-						                </individualWatchlistDetails>\
-						        </ns2:getWatchListDetailsResponse>\
-						    </soap:Body>\
-						</soap:Envelope>';
+		var xmlString = '<employees>\
+							<employee>\
+								<empId>1000</empId>\
+							</employee>\
+							<employee>\
+								<empId>2000</empId>\
+							</employee>\
+						</employees>';
 
 
 		 $(document).ready(function(){
@@ -85,8 +44,8 @@
 				};
 
 
-				$("#result").text(JSON.stringify(xmlParser.toJSON()));
-				console.log(xmlParser.get("individualWatchlistDetails"));
+				$("#result").text(JSON.stringify(xmlParser.get('employees')));
+				console.log(xmlParser.get('employees'));
 		 });
 	</script>
 </body>

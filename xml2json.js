@@ -153,7 +153,6 @@ var xml2json = (function(window, document, undefined){
 						unendedTag = unendedTags.pop(),
 						validateEndTag = endedTag['key'] == tag.replace(/^<\/|>$/g,'');
 
-					//console.log(endedTag['key'], "----->", tag, validateEndTag);
 					if(typeof unendedTag == undefined) {
 						return endedTag['value'];
 					}
