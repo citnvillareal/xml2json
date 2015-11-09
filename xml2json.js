@@ -192,7 +192,7 @@ var xml2json = (function(window, document, undefined){
 		if(this.options.xml == false) return false;
 
 		obj = obj || this.toJSON();
-
+		
 		if(typeof obj != 'object') return false;
 
 		for(var k in obj) {
@@ -205,7 +205,9 @@ var xml2json = (function(window, document, undefined){
 					var tempObj = this.get(key, obj[k]);
 					if(typeof tempObj == "string") {
 						result.push(tempObj);
-					} else {
+					} else if(typeof tempObj == "object") {
+						result.push(tempObj);
+					} else if(Array.isArray(tempObj)) {
 						for(var i in tempObj) {
 							result.push(tempObj[i]);
 						}
@@ -213,7 +215,7 @@ var xml2json = (function(window, document, undefined){
 				}
 			}
 		}
-
+		
 		return result.length <= 1? (result[0] || false): result;
 	};
 	
@@ -222,7 +224,9 @@ var xml2json = (function(window, document, undefined){
 		
 		if(Array.isArray(obj)) return obj;
 		
-		temp.push(obj);
+		if(obj !== false) {
+			temp.push(obj);
+		}
 		
 		return temp;
 	};
